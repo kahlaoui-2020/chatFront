@@ -14,10 +14,10 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.auth.token;
+    const token = localStorage.getItem('token');
     const modifiedReq = request.clone({
       headers: request.headers.set('Authorization', `Bearer ${token}`)
     });
-    return next.handle(request);
+    return next.handle(modifiedReq);
   }
 }
