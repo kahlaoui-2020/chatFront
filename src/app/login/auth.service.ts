@@ -17,6 +17,7 @@ export class AuthService {
         // this.token = response.access_token;
         localStorage.setItem('token', response.access_token);
         await this.router.navigate(['/room']);
+        this.user()
 
       },
       error: (err) => console.log(err),
@@ -26,7 +27,6 @@ export class AuthService {
   user(): void {
     this.http.get<User>('http://localhost:3000/users/auth/me').subscribe({
       next: async (response) => {
-        console.log(response)
         localStorage.setItem('user', JSON.stringify(response))
       },
       error: (err) => console.log(err),

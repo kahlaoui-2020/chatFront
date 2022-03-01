@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../login/auth.service';
+import { User } from '../models/user.model';
 import { ChatService } from './service/chat.service';
 
 @Component({
@@ -22,8 +23,7 @@ export class RoomComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    console.log(localStorage.getItem('token'))
-    console.log(this.auth.user())
+    console.log(JSON.parse(localStorage.getItem('user')!))
 
     this.chatService.startConnection();
     this.chatService.getMessage()
