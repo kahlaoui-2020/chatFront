@@ -1,0 +1,17 @@
+<div>
+    <p>room works!</p> 
+    <div style="position:absolute; bottom:0">
+        <mat-form-field>
+            <label for="msg">Message...</label>
+            <input matInput [formControl]="msg"  type="text">
+        </mat-form-field>
+        <button mat-button (click)="send()">
+            <mat-icon>send</mat-icon> 
+    </button>
+    </div>
+   
+    <div *ngFor="let item of list">
+        <p>{{item}}</p>
+    </div>
+</div>
+
