@@ -1,17 +1,38 @@
 <div class="container">
-    <form class="row" [formGroup]="loginForm" (submit)="login()">
-        <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password">
-        </mat-form-field>
-        <button mat-raised-button type="submit">Login</button>
-    </form>
-    <a>Forget password</a>
-    <a>Sign up</a>
+    <div class="row-1">    <mat-slide-toggle (change)="switchTheme($event)">Dark mode</mat-slide-toggle>
+    </div>
+    <div class="row-2">
+        <div class="column-1">
+            <mat-card class="row">
+                <mat-card-header>
+                    Connexion
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="loginForm" (submit)="login()">
+                        <mat-form-field appearance="outline" color="primary">
+                            <mat-label>Email</mat-label>
+                            <input matInput type="email" formControlName="email">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" formControlName="password">
+                        </mat-form-field>
+                        <button mat-raised-button type="submit">Login</button>
+                    </form>
+                </mat-card-content>
+                <mat-card-actions>
+                    <a>Forget password</a>
+                    <a>Sign up</a>        
+                </mat-card-actions>
+            </mat-card>
+        </div>
+       
+        <span>Or</span>
+        
+        <div class="column-2">
 
+        </div>
+        
+    </div>
+   
 </div>
-
