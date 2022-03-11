@@ -11,9 +11,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RoomComponent } from './room/room.component';
 import { HttpHeaderInterceptor } from './http-header.interceptor';
 import { HomeComponent } from './home/home.component';
-import { StoriesPanelComponent } from './stories-panel/stories-panel.component';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
 
 
 import {InputTextModule} from 'primeng/inputtext';
@@ -28,10 +25,7 @@ import {TabViewModule} from 'primeng/tabview';
     AppComponent,
     LoginComponent,
     RoomComponent,
-    HomeComponent,
-    StoriesPanelComponent,
-    FooterComponent,
-    HeaderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
