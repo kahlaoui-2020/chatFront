@@ -10,13 +10,28 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RoomComponent } from './room/room.component';
 import { HttpHeaderInterceptor } from './http-header.interceptor';
+import { HomeComponent } from './home/home.component';
+import { StoriesPanelComponent } from './stories-panel/stories-panel.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 
+
+import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {RippleModule} from 'primeng/ripple';
+import {TabViewModule} from 'primeng/tabview';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RoomComponent,
+    HomeComponent,
+    StoriesPanelComponent,
+    FooterComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +39,14 @@ import { HttpHeaderInterceptor } from './http-header.interceptor';
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    InputTextModule,
+    ButtonModule,
+    CheckboxModule,
+    RadioButtonModule,
+    RippleModule,
+    TabViewModule
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpHeaderInterceptor, multi: true}
