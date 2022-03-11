@@ -1,17 +1,26 @@
 <div>
-    <p>room works!</p> 
-    <div style="position:absolute; bottom:0">
-        <mat-form-field>
-            <label for="msg">Message...</label>
-            <input matInput [formControl]="msg"  type="text">
-        </mat-form-field>
-        <button mat-button (click)="send()">
-            <mat-icon>send</mat-icon> 
-    </button>
+    <div style="text-align:center;">
+        <strong><i>{{me.firstName}}</i> <i> {{me.lastName}}</i></strong>
+        <mat-divider></mat-divider>
+        <p><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
     </div>
-   
-    <div *ngFor="let item of list">
-        <p>{{item}}</p>
+    <mat-divider></mat-divider>
+    <div>
+        <p>room works!</p> 
+        <div style="position:absolute; bottom:0">
+            <mat-form-field>
+                <label for="msg">Message...</label>
+                <input matInput [formControl]="msg"  type="text">
+            </mat-form-field>
+            <button mat-button (click)="send()">
+                <mat-icon>send</mat-icon> 
+        </button>
+        </div>
+       
+        <div *ngFor="let message of room?.messages">
+            <p>{{message.content}}</p>
+        </div>
     </div>
 </div>
+
 
