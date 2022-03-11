@@ -1,0 +1,28 @@
+::ng-deep .mat-tab-labels {
+    justify-content: space-between;
+}
+.container {
+  height: 100%;
+}
+
+mat-drawer {
+    width: 20%;
+    
+}
+mat-drawer-content {
+    width: 80%
+}
+h3 {
+    margin: 0;
+}
+.center-text {
+    text-align: center;
+    margin: 20px 0;
+}
+.scroll {
+    
+}
+mat-list-option {
+    background-color: rgb(163, 163, 136);
+    border: 0.7px solid #fff;
+}

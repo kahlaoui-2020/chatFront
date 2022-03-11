@@ -7,13 +7,80 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    background-color: var(--background-color)
+}
+.row-1 {
+    flex: 5%;
+    width: 100%;
+    text-align: end;
+}
+.row-2 {
+    flex: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.column-1 {
+    flex: 1;
+    justify-content: center;
+    display: flex;
+}
+.column-2 {
+    flex: 1;
 }
 .row {
-    width: 80%;
+    width: 60%;
     height: 40%;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 20%;  
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+}
+
+mat-card {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+mat-card-header {
+    margin: auto;
+}
+mat-card-actions {
+    margin: auto;
+    display: inline-grid;
+    text-align: center
+}
+
+span {
+    height: 100%;
+    width: 50px;
+    display: inline-block;
+    text-align: center;
+}
+span::before {
+    border-left: 1px solid black;
+    content: "";
+    display: block;
+    width: 1px;
+    z-index: 0;
+    height: 45%;
+    margin: 0 24px;
+}
+span::after {
+    border-left: 1px solid black;
+    content: "";
+    display: block;
+    height: 45%;
+    z-index: 0;
+    bottom: 0;
+    margin: 0 24px;
 }
