@@ -39,7 +39,7 @@ export class HomeService {
 
   addMessage(id: string, message: Message) {
     console.log('all rooms: ', this.rooms);
-    const room = this.rooms.find((room: UserRoom )=> room.id === id);
+    const room = this.rooms.find((room: UserRoom )=> room.roomId === id);
     console.log('room: ', room);
     room!.messages!.push(message);
    // this.listRooms.next()friends.emit(this.rooms);

@@ -33,14 +33,16 @@ export class ChatService {
     this.socket.emit('message', {
       message,
       sender,
-      to
+      to,
+      roomId,
     });
-    this.homeService.addMessage(to, {content: message, sender: sender, roomId: roomId});
+    this.homeService.addMessage(roomId, {content: message, sender: sender});
    // this.messages.emit(message);
   }
   public getMessage(idRoom: string, idFriend: string) {
-    this.socket.off('message').on('message', (message: string, sender: string) => {
-      this.homeService.addMessage(sender, { content:message, sender });
+    this.socket.off('message').on('message', (message: string, sender: string, roomId: any) => {
+      console.log(roomId)
+      this.homeService.addMessage(roomId, { content:message, sender });
       // if (sender === idFriend) this.messages.emit(message);
     });
   }
