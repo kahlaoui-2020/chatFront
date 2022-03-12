@@ -51,17 +51,18 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges {
     this.chatService.getMessage(this.friend.roomId!, this.friend.id!);
   })
   
-    this.homeService.friends.subscribe(rooms => {
-      // this.rooms = rooms; 
-      this.room = rooms.find(room => room.id === this.friend.id)!;
-      console.log('On a changé room!')
-      // console.log(0, rooms)
-      // var room = rooms.find(room => room.roomId === this.friend.roomId); /** */
-      // var message = room!.messages![room!.messages!.length - 1]; /** */
-      // this.room.id = room!.id
-      // if (this.room.messages === undefined) { this.room.messages = []; }
-      // this.room.messages.push(message);
-    })
+    // this.homeService.friends.subscribe(rooms => {
+    //   // this.rooms = rooms; 
+    
+    //   this.room = rooms.find(room => room.id === this.friend.id)!;
+    //   console.log('On a changé room!', this.friend)
+    //   // console.log(0, rooms)
+    //   // var room = rooms.find(room => room.roomId === this.friend.roomId); /** */
+    //   // var message = room!.messages![room!.messages!.length - 1]; /** */
+    //   // this.room.id = room!.id
+    //   // if (this.room.messages === undefined) { this.room.messages = []; }
+    //   // this.room.messages.push(message);
+    // })
   }
   send() {
     this.chatService.sendMessage(this.me.id!, this.friend.id!, this.friend.roomId!, this.msg.value)
