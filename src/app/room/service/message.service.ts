@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Message } from 'src/app/models/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,10 @@ export class MessageService {
 
   }
 
-  getMessages(): Observable<Message[]> {
-    return this.http.get<Message[]>('http://localhost:3000/message')
+  getMessages(id: any): Observable<Message[]> {
+
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.get<Message[]>('http://localhost:3000/messages', {params})
   }
 }

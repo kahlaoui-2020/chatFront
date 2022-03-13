@@ -5,6 +5,7 @@ import { Message } from 'src/app/models/message.model';
 import { Room } from 'src/app/models/room.model';
 import { UserRoom } from 'src/app/models/user-room.model';
 import { User } from 'src/app/models/user.model';
+import { MessageService } from 'src/app/room/service/message.service';
 import { ChatDbService } from 'src/app/services/chat.db.service';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class HomeService {
   rooms: UserRoom[] = [];
   listRooms: BehaviorSubject<UserRoom[]> = new BehaviorSubject<UserRoom[]>(this.rooms);
   friend: BehaviorSubject<UserRoom> = new BehaviorSubject<UserRoom>({});
-  constructor(private http: HttpClient, private dbService: ChatDbService) {}
+  constructor(private http: HttpClient, private dbService: ChatDbService, private messageService: MessageService) {}
 
   getFriends(): void{
     // console.log('log')
@@ -29,8 +30,21 @@ export class HomeService {
         rObj.id = room.id;
         rObj.firstName = room.firstName;
         rObj.lastName = room.lastName;
-        rObj.messages = []
-        return rObj;});
+        rObj.messages = [];
+        this.messageService.getMessages(room.roomId).subscribe(value => {
+          for(let message of value) {
+             console.log('message: ', message);
+             rObj.messages!.push(message);
+          }
+         })
+        return rObj;
+      });
+    // this.messageService.getMessages(this.rooms[0].roomId).subscribe(value => {
+    //  for(let message of value) {
+    //     console.log('message: ', message);
+    //     this.rooms[0].messages!.push(message);
+    //  }
+    // })
     this.friend.next(this.rooms[0])
     this.friends.emit(this.rooms);
       //this.dbService.setFriend(value)

@@ -19,13 +19,15 @@ export class HomeComponent implements OnInit, OnChanges{
   friends: UserRoom[] = [];
   friend!: UserRoom;
   messages: Message[] = [];
+  me: User;
   constructor(
     private homeService: HomeService, 
     private chatService: ChatService) { 
       if(!chatService.socket.active) {
         this.chatService.startConnection();
         console.log("Start new Connection!", this.chatService.socket.active)
-      }      
+      }  
+      this.me = JSON.parse(localStorage.getItem('user')!);    
     }
   ngOnChanges(changes: SimpleChanges): void {
    

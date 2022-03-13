@@ -1,26 +1,26 @@
-<div>
-    <div style="text-align:center;">
-        <strong><i>{{me.firstName}}</i> <i> {{me.lastName}}</i></strong>
-        <mat-divider></mat-divider>
+<div class="container">
+    <mat-toolbar>
         <p><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
-    </div>
+    </mat-toolbar>
     <mat-divider></mat-divider>
-    <div>
-        <p>room works!</p> 
-        <div style="position:absolute; bottom:0">
-            <mat-form-field>
-                <label for="msg">Message...</label>
-                <input matInput [formControl]="msg"  type="text">
-            </mat-form-field>
-            <button mat-button (click)="send()">
-                <mat-icon>send</mat-icon> 
-        </button>
-        </div>
-       
+    <div style="background-color: aquamarine; flex-grow: 1; width:80%; margin: 15px auto; overflow-y: auto;">
         <div *ngFor="let message of room?.messages">
-            <p>{{message.content}}</p>
+            <div [ngClass]="message.sender === me.id? 'sender': 'recivier'">
+                <p>{{message.content}}</p>
+                <p>{{message.creationDate}}</p>
+            </div>
+
+            <mat-divider></mat-divider>
         </div>
+    </div>
+    <div style="width:80%; margin: auto; text-align:center; display: flex; justify-content: space-between;">
+            <input matInput style="    width: 100%;
+            border-radius: 15px;
+            border: 1px solid gray;
+            margin: 15px 0;
+            height: 30px;" [formControl]="msg" type="text">
+        <button mat-button (click)="send()">
+            <mat-icon>send</mat-icon>
+        </button>
     </div>
 </div>
-
-
