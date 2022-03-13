@@ -27,9 +27,19 @@ export class HomeService {
         rObj.firstName = room.firstName;
         rObj.lastName = room.lastName;
         rObj.messages = [];
-        this.messageService.getMessages(room.roomId).subscribe(value => {
-          for(let message of value) {
-             console.log('message: ', message);
+
+        rObj.pagination = {
+          msgCount: room.msgCount!,
+          limit: 5,
+          skip: (room.msgCount! - 5) <= 0 ? 0: room.msgCount! - 5,
+        };
+        console.log(rObj);
+        this.messageService.getMessages(
+          room.roomId, 
+          rObj.pagination.limit, rObj.pagination.skip)
+          .subscribe(value => {
+            for(let message of value) {
+             // console.log('message: ', message);
              rObj.messages!.push(message);
           }
          })
