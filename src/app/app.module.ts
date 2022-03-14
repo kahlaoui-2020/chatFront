@@ -19,6 +19,8 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {RippleModule} from 'primeng/ripple';
 import {TabViewModule} from 'primeng/tabview';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {TabViewModule} from 'primeng/tabview';
     CheckboxModule,
     RadioButtonModule,
     RippleModule,
-    TabViewModule
+    TabViewModule,
+    InfiniteScrollModule
 
   ],
   providers: [
@@ -47,4 +50,5 @@ import {TabViewModule} from 'primeng/tabview';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+platformBrowserDynamic().bootstrapModule(AppModule);
