@@ -24,12 +24,10 @@ export class ChatService {
   constructor(private auth: AuthService, private homeService: HomeService) { }
 
   public startConnection(): void {
-    // console.log(JSON.parse(localStorage.getItem('user')!))
       this.socket.auth = { username: JSON.parse(localStorage.getItem('user')!).firstName };
       this.socket.connect();
   }
   public sendMessage(sender: string, to: string, roomId: string,message: string) {
-    // let user = this.users.find(u => u.username === 'Nizar')
     this.socket.emit('message', {
       message,
       sender,
@@ -37,20 +35,16 @@ export class ChatService {
       roomId,
     });
     this.homeService.addMessage(roomId, {content: message, sender: sender});
-   // this.messages.emit(message);
   }
   public getMessage(idRoom: string, idFriend: string) {
     this.socket.off('message').on('message', (message: string, sender: string, roomId: any) => {
       console.log(roomId)
       this.homeService.addMessage(roomId, { content:message, sender });
-      // if (sender === idFriend) this.messages.emit(message);
     });
   }
   public getUsers() {
     this.socket.on('user-connected', (data: any) => {
       this.users.push(data);
-      // console.log(data);
-      // this.messages.emit(message);
     });
   }
   public onConnect(): void {

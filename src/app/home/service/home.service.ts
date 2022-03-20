@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Message } from 'src/app/models/message.model';
-import { Room } from 'src/app/models/room.model';
 import { UserRoom } from 'src/app/models/user-room.model';
-import { User } from 'src/app/models/user.model';
+import { MessageService } from 'src/app/room/service/message.service';
 import { ChatDbService } from 'src/app/services/chat.db.service';
 
 @Injectable({
@@ -16,21 +15,26 @@ export class HomeService {
   rooms: UserRoom[] = [];
   listRooms: BehaviorSubject<UserRoom[]> = new BehaviorSubject<UserRoom[]>(this.rooms);
   friend: BehaviorSubject<UserRoom> = new BehaviorSubject<UserRoom>({});
-  constructor(private http: HttpClient, private dbService: ChatDbService) {}
+  constructor(private http: HttpClient, private dbService: ChatDbService, private messageService: MessageService) {}
 
   getFriends(): void{
-    // console.log('log')
     this.http.get<UserRoom[]>('http://localhost:3000/rooms')
     .subscribe(value => {
-      // console.log('friends: ', value);
       this.rooms  = value.map(room => {
         var rObj: UserRoom = {};
         rObj.roomId = room.roomId;
         rObj.id = room.id;
         rObj.firstName = room.firstName;
         rObj.lastName = room.lastName;
-        rObj.messages = []
-        return rObj;});
+        rObj.messages = [];
+        this.messageService.getMessages(room.roomId).subscribe(value => {
+          for(let message of value) {
+             console.log('message: ', message);
+             rObj.messages!.push(message);
+          }
+         })
+        return rObj;
+      });
     this.friend.next(this.rooms[0])
     this.friends.emit(this.rooms);
       //this.dbService.setFriend(value)
@@ -42,11 +46,7 @@ export class HomeService {
     const room = this.rooms.find((room: UserRoom )=> room.roomId === id);
     console.log('room: ', room);
     room!.messages!.push(message);
-   // this.listRooms.next()friends.emit(this.rooms);
-    //this.listRooms.next(this.rooms)
     this.friends.next(this.rooms)
-    //console.log(this.listRooms.value)
-    //this.listRooms.next();
   }
 
   getRoom(id: string): UserRoom {

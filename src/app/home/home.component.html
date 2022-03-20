@@ -1,7 +1,7 @@
 <mat-drawer-container class="container">
     <mat-drawer mode="side" opened>
         <div class="center-text">
-            <h3>Discussions</h3>
+            <h3>{{me.lastName}} {{me.firstName}}</h3>
         </div>
         <mat-selection-list [multiple]="false" #list (selectionChange)="openRoom(list.selectedOptions.selected[0].value)">
             <mat-list-option *ngFor="let friend of friends" [value]="friend">
@@ -10,28 +10,8 @@
         </mat-selection-list>
     </mat-drawer>
     <mat-drawer-content>
-        
-        <div class="center-text">
-            <h3>Main Room</h3>
-        </div>
-        <div>
             <app-room></app-room> 
-        </div>
        
     </mat-drawer-content>
 </mat-drawer-container>
-    <!-- <app-header></app-header> -->
-    <!-- <app-stories-panel></app-stories-panel> -->
-    
-    <!-- <mat-tab-group style="justify-content: space-evenly">
-        <mat-tab label="Pinned"> Content 1 </mat-tab>
-        <mat-tab label="Chats">
-            <mat-selection-list [multiple]="false" #list (selectionChange)="openRoom(list.selectedOptions.selected[0].value)">
-                <mat-list-option *ngFor="let friend of friends" [value]="friend">
-                    {{ friend.lastName }} {{ friend.firstName }}
-                </mat-list-option>
-            </mat-selection-list>
-        </mat-tab>
-        <mat-tab label="Groups"> Content 3 </mat-tab>
-    </mat-tab-group> -->
-    <!-- <app-footer></app-footer> -->
+
