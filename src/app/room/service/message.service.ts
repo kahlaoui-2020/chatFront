@@ -14,10 +14,12 @@ export class MessageService {
 
   }
 
-  getMessages(id: any): Observable<Message[]> {
+  getMessages(id: any, limit: number, skip: number): Observable<Message[]> {
 
     let params = new HttpParams();
     params = params.append('id', id);
+    params = params.append('limit', limit);
+    params = params.append('skip', skip);
     return this.http.get<Message[]>('http://localhost:3000/messages', {params})
   }
 }

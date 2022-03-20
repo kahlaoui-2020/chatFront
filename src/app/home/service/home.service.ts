@@ -20,16 +20,25 @@ export class HomeService {
   getFriends(): void{
     this.http.get<UserRoom[]>('http://localhost:3000/rooms')
     .subscribe(value => {
-      this.rooms  = value.map(room => {
+      this.rooms  = value.map((room, index) => {
         var rObj: UserRoom = {};
         rObj.roomId = room.roomId;
         rObj.id = room.id;
         rObj.firstName = room.firstName;
         rObj.lastName = room.lastName;
         rObj.messages = [];
-        this.messageService.getMessages(room.roomId).subscribe(value => {
-          for(let message of value) {
-             console.log('message: ', message);
+
+        rObj.pagination = {
+          msgCount: room.msgCount!,
+          limit: 15,
+          skip: (room.msgCount! - 15) <= 0 ? 0: (room.msgCount! - 15),
+        };
+        this.messageService.getMessages(
+          room.roomId, 
+          rObj.pagination.limit, rObj.pagination.skip)
+          .subscribe(value => {
+            for(let message of value) {
+             // console.log('message: ', message);
              rObj.messages!.push(message);
           }
          })
@@ -37,6 +46,7 @@ export class HomeService {
       });
     this.friend.next(this.rooms[0])
     this.friends.emit(this.rooms);
+
       //this.dbService.setFriend(value)
     })
   }
@@ -46,7 +56,8 @@ export class HomeService {
     const room = this.rooms.find((room: UserRoom )=> room.roomId === id);
     console.log('room: ', room);
     room!.messages!.push(message);
-    this.friends.next(this.rooms)
+    this.friends.next(this.rooms);
+
   }
 
   getRoom(id: string): UserRoom {

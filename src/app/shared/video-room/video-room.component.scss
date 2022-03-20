@@ -1,0 +1,20 @@
+div.container {
+    display: flex;
+    div { 
+        width: 300px;
+        height: 300px;
+        .remote-video {
+           border: 1px solid red
+        }
+        .local-video {
+            border: 1px solid blue
+        }
+    }
+   
+}
+
+video {
+    width: 300px;
+    height: 300px;
+}
+

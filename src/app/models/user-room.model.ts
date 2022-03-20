@@ -6,4 +6,10 @@ export interface UserRoom {
     firstName?: string;
     roomId?: string;
     messages?: Message[];
+    msgCount?: number;
+    pagination?: {
+        msgCount: number;
+        limit: number;
+        skip: number;
+    }
 }
