@@ -23,9 +23,14 @@ export class ChatService {
 
   constructor(private auth: AuthService, private homeService: HomeService) { }
 
-  public startConnection(): void {
-      this.socket.auth = { username: JSON.parse(localStorage.getItem('user')!).firstName };
+  public async startConnection(): Promise<void> {
+      this.socket.auth = { 
+        username: JSON.parse(localStorage.getItem('user')!).firstName,
+        socketID: null
+      };
       this.socket.connect();
+
+      
   }
   public sendMessage(sender: string, to: string, roomId: string,message: string) {
     this.socket.emit('message', {
@@ -58,4 +63,7 @@ export class ChatService {
     })
   }
 
+  public disconnect(): void {
+    this.socket.disconnect()
+  }
 }

@@ -4,6 +4,7 @@ import { Message } from '../models/message.model';
 import { UserRoom } from '../models/user-room.model';
 import { User } from '../models/user.model';
 import { ChatService } from '../room/service/chat.service';
+import { PeerService } from '../room/service/peer.service';
 import { HomeService } from './service/home.service';
 
 @Component({
@@ -20,15 +21,21 @@ export class HomeComponent implements OnInit, OnChanges{
   me: User;
   constructor(
     private homeService: HomeService, 
-    private chatService: ChatService) { 
-      if(!chatService.socket.active) {
+    private chatService: ChatService,
+    private peerService: PeerService) { 
+    // this.chatService.disconnect()
         this.chatService.startConnection();
-        console.log("Start new Connection!", this.chatService.socket.active)
-      }  
-      this.me = JSON.parse(localStorage.getItem('user')!);    
+        
+        console.log(this.chatService.socket.auth, "Start new Connection!", this.chatService.socket.active);
+      
+      this.me = JSON.parse(localStorage.getItem('user')!);  
+      
+      this.peerService.initPeer(this.me.id!); 
+      console.log('destroyed: ', peerService.peer.destroyed) 
+      console.log('disconnected: ', peerService.peer.disconnected) 
     }
   ngOnChanges(changes: SimpleChanges): void {
-   
+   console.log('ng: ', this.peerService.peer)
   }
 
   ngOnInit(): void {
@@ -36,7 +43,7 @@ export class HomeComponent implements OnInit, OnChanges{
 
 
     this.chatService.getUsers();
-    this.chatService.onDisconnect();
+    //this.chatService.onDisconnect();
     if(this.friends.length == 0) this.homeService.getFriends();
     
     this.homeService.friend.subscribe(value => {this.friend = value})

@@ -1,7 +1,8 @@
 <div class="container">
     <mat-toolbar>
         <p><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
-        <button ma-button (click)="click()">clik</button>
+        <button mat-button (click)="connect()"><mat-icon>connect</mat-icon></button>
+        <button mat-button (click)="call()"><mat-icon>phone</mat-icon></button>
     </mat-toolbar>
     <mat-divider></mat-divider>
     <div #scroll id="scroll-div-1"

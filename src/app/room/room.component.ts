@@ -1,11 +1,14 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Message } from 'primeng/api';
 import { HomeService } from '../home/service/home.service';
 import { UserRoom } from '../models/user-room.model';
 import { User } from '../models/user.model';
+import { VideoRoomComponent } from '../shared/video-room/video-room.component';
 import { ChatService } from './service/chat.service';
 import { MessageService } from './service/message.service';
+import { PeerService } from './service/peer.service';
 
 
 @Component({
@@ -25,8 +28,15 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
   me: User;
 
   constructor(
-    private chatService: ChatService, private homeService: HomeService, private messageService: MessageService) {
+    private chatService: ChatService, 
+    private homeService: HomeService, 
+    private messageService: MessageService,
+    private peerService: PeerService,
+    private dialog: MatDialog) {
     this.me = JSON.parse(localStorage.getItem('user')!);
+    this.peerService.initPeer(this.me.id!)
+    // console.log(this.me);
+    
   }
   ngAfterViewChecked(): void {
     document.getElementById('scroll-div-1')!.scrollTop = document.getElementById('scroll-div-1')!.scrollHeight
@@ -44,19 +54,45 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
   }
 
   ngOnInit(): void {
+    this.peerService.onListening()
+    this.peerService.peer.on("call", (call) => {
+      if(confirm(`Accept call from ${call.peer}`)) {
+        const dialogRef = this.dialog.open(VideoRoomComponent, {
+          data:{
+            call: call,
+            answer: true,
+            }
+          });
+        dialogRef.afterClosed().subscribe(() => {
+          console.log('dialog closed')
+        })
+      }
+    })
     this.homeService.friend.subscribe(value => {
       this.friend = value;
       this.room = this.homeService.getRoom(this.friend.roomId!)
       this.chatService.getMessage(this.friend.roomId!, this.friend.id!);
-    })
+    });
+    this.peerService.establishConnection(this.friend.id!)
   }
   send() {
     this.chatService.sendMessage(this.me.id!, this.friend.id!, this.friend.roomId!, this.msg.value)
   }
 
-  click() {
-    console.log(this.room.messages!.length)
-    console.log(this.friend.pagination)
+  connect() {
+
+    this.peerService.initPeer(this.me.id!)
+  }
+  call() {
+    const dialogRef = this.dialog.open(VideoRoomComponent, {
+      data: {
+        id: this.friend.id
+      }
+    })
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('end call')
+    })
+   
   }
   onScroll() {
    
