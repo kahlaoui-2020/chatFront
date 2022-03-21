@@ -1,8 +1,8 @@
 <div class="container">
-    <mat-toolbar>
-        <p><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
-        <button mat-button (click)="connect()"><mat-icon>connect</mat-icon></button>
-        <button mat-button (click)="call()"><mat-icon>phone</mat-icon></button>
+    <mat-toolbar >
+        <p style="margin: 0px;"><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
+        <button mat-icon-button (click)="connect()"><mat-icon svgIcon="whatsapp"></mat-icon></button>
+        <button mat-icon-button (click)="call()"><mat-icon svgIcon="duo"></mat-icon></button>
     </mat-toolbar>
     <mat-divider></mat-divider>
     <div #scroll id="scroll-div-1"
@@ -25,14 +25,14 @@
             <mat-divider></mat-divider>
         </div>
     </div>
-    <div style="width:80%; margin: auto; text-align:center; display: flex; justify-content: space-between;">
+    <div mat-line style="width:80%; margin: auto; text-align:center; display: flex; justify-content: space-between;">
             <input matInput style="    width: 100%;
             border-radius: 15px;
             border: 1px solid gray;
             margin: 15px 0;
             height: 30px;" [formControl]="msg" type="text">
-        <button mat-button (click)="send()">
-            <mat-icon>send</mat-icon>
+        <button mat-icon-button (click)="send()" style="margin: auto;">
+            <mat-icon svgIcon="send"></mat-icon>
         </button>
     </div>
 </div>
