@@ -12,9 +12,12 @@ export class ErrorHandlerService implements ErrorHandler {
     handleError(error: any): void {
         let dialog: MatDialog = this.injector.get(MatDialog)
         if(error instanceof HttpErrorResponse) {
+
+            if(error.message === 'Inactive')
             this.ngzone.run(() => {
                 dialog.open(ErrorModalComponent)
             })
+            else console.error(error)
             
         } else {
 

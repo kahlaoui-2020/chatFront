@@ -11,7 +11,7 @@ export function checkPasswords(control: AbstractControl) {
   const password = control.get('password')!.value;
   const confirmPassword = control.get('confirmPassword')!.value;
 
-  if(password !== confirmPassword) control.get('confirmPassword')?.setErrors({notSame: true})
+  if (password !== confirmPassword) control.get('confirmPassword')?.setErrors({ notSame: true })
 
 
 }
@@ -35,12 +35,12 @@ export class LoginComponent implements OnInit {
   display = true;
   matcher: ErrorStateMatcher = new ErrorStateMatcher()
 
- 
+
   constructor(
     private chatService: ChatService,
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    private primengConfig: PrimeNGConfig) {}
+    private primengConfig: PrimeNGConfig) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -56,9 +56,9 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]],
       confirmPassword: ['']
     },
-    {
-      validator: checkPasswords
-    })
+      {
+        validator: checkPasswords
+      })
   }
 
   login(): void {
@@ -89,9 +89,14 @@ export class LoginComponent implements OnInit {
 
   }
   createAccount(): void {
-    this.stepper.next();
-    this.auth.create(this.signupForm.value).subscribe(value => {
-      console.log(value);
+
+    this.auth.create(this.signupForm.value).subscribe({
+      next: async (value) => {
+        if (value) this.stepper.next()
+      }, error: (err) => {
+        throw err
+
+      }
     })
   }
   confirm(): void {
@@ -118,11 +123,11 @@ export class LoginComponent implements OnInit {
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    
+
     const invalidCtrl = !!(control && control.invalid && control.parent?.dirty);
     const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
     console.log(invalidCtrl, invalidParent)
-    return invalidCtrl ;
+    return invalidCtrl;
   }
-  
+
 }
