@@ -1,12 +1,20 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ChatService } from '../room/service/chat.service';
 import { AuthService } from './service/auth.service';
 import { PrimeNGConfig } from 'primeng/api';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatButton } from '@angular/material/button';
-import { MatCard } from '@angular/material/card';
+import { MatStepper } from '@angular/material/stepper';
+import { ErrorStateMatcher } from '@angular/material/core';
 
+export function checkPasswords(control: AbstractControl) {
+  const password = control.get('password')!.value;
+  const confirmPassword = control.get('confirmPassword')!.value;
+
+  if(password !== confirmPassword) control.get('confirmPassword')?.setErrors({notSame: true})
+
+
+}
 
 @Component({
   selector: 'app-login',
@@ -19,27 +27,37 @@ export class LoginComponent implements OnInit {
   isChecked = true;
   loginForm!: FormGroup;
   signupForm!: FormGroup;
+  code = new FormControl('');
+
+
+  @ViewChild('stepper') stepper!: MatStepper;
 
   display = true;
+  matcher: ErrorStateMatcher = new ErrorStateMatcher()
+
+ 
   constructor(
     private chatService: ChatService,
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    private primengConfig: PrimeNGConfig) { }
+    private primengConfig: PrimeNGConfig) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     this.chatService.onDisconnect();
     this.loginForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.pattern('')]],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]]
     });
     this.signupForm = this.formBuilder.group({
-      firstname: [null, [Validators.required, Validators.pattern('')]],
-      lastname: [null, [Validators.required, Validators.pattern('')]],
-      signupEmail: [null, [Validators.required, Validators.pattern('')]],
-      signupPassword: [null, [Validators.required]],
-      signupSecondPassword: [null, [Validators.required]]
+      firstName: [null, [Validators.required, Validators.pattern('')]],
+      lastName: [null, [Validators.required, Validators.pattern('')]],
+      email: [null, [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['']
+    },
+    {
+      validator: checkPasswords
     })
   }
 
@@ -48,14 +66,14 @@ export class LoginComponent implements OnInit {
 
   }
   signup(col2: HTMLDivElement, col1: HTMLElement): void {
-      col2.classList.replace('column-2', 'column-1');
-      col1.classList.replace('column-1', 'column-2');
+    col2.classList.replace('column-2', 'column-1');
+    col1.classList.replace('column-1', 'column-2');
 
-      (col2.querySelector('.singUp')! as HTMLDivElement).style.display = 'none';
-      (col2.querySelector('.singIn')! as HTMLElement).style.display = 'flex';
-      col2.style.borderRadius = '0 25px 25px 0';
+    (col2.querySelector('.singUp')! as HTMLDivElement).style.display = 'none';
+    (col2.querySelector('.singIn')! as HTMLElement).style.display = 'flex';
+    col2.style.borderRadius = '0 25px 25px 0';
 
-      this.display = false;
+    this.display = false;
 
 
   }
@@ -68,13 +86,17 @@ export class LoginComponent implements OnInit {
 
     this.display = true
 
- 
-  }
 
+  }
   createAccount(): void {
+    this.stepper.next();
+    this.auth.create(this.signupForm.value).subscribe(value => {
+      console.log(value);
+    })
+  }
+  confirm(): void {
 
   }
-
   switch(theme: string, light: MatButton, dark: MatButton) {
     if (theme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
@@ -88,9 +110,19 @@ export class LoginComponent implements OnInit {
     };
 
   }
-
   resetPasswd(): void {
 
   }
 
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    
+    const invalidCtrl = !!(control && control.invalid && control.parent?.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+    console.log(invalidCtrl, invalidParent)
+    return invalidCtrl ;
+  }
+  
 }
