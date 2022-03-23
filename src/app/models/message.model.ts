@@ -4,6 +4,6 @@ export interface Message {
     id?: number;
     sender?: string;
     content?: string;
-    creationDate?: Timestamp<Date>;
+    creationDate?: Date;
     roomId?: string;
 }
