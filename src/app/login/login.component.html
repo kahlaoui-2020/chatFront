@@ -1,6 +1,6 @@
 <div class="container">
     <div class="column-1" #column1>
-        <mat-card [ngStyle]="{'display': display? 'flex': 'none'}" class="content">
+        <mat-card [ngClass]="display? 'show': 'hide'"  class="content">
             <mat-card-subtitle>
                 <div>
                     Connexion
@@ -37,7 +37,7 @@
 
         </mat-card>
 
-        <mat-card [ngStyle]="{'display': !display? 'flex': 'none'}" class="content" #secondcard>
+        <mat-card [ngClass]="!display? 'show': 'hide'" class="content" #secondcard>
 
             <mat-card-content>
                 <mat-stepper #stepper linear>
@@ -102,9 +102,9 @@
     </div>
 
     <div class="column-2 box-card" #column2>
-        <div class="content singUp">
-            <h4>Hello, Friend! come join us</h4>
-            <p>Create an accout or use your google account,
+        <div class="content singUp" [ngClass]="display? 'show': 'hide'">
+            <h4 [ngClass]="display_text? 'text-show': 'text-hide'">Hello, Friend! come join us</h4>
+            <p  id="p1" style="height: 80px;" [ngClass]="display_text? 'text-show': 'text-hide'">Create an accout or use your google account,
                 With Hellofriend you can also start an anonymaus peer to peer video call, without the need to have an
                 account, It's great no
             </p>
@@ -113,9 +113,9 @@
             </div>
         </div>
 
-        <div class="content singIn" style="display: none">
-            <h4>Hello, Friend! </h4>
-            <p>You have already an account,
+        <div class="content singIn" [ngClass]="!display? 'show': 'hide'">
+            <h4 [ngClass]="!display_text? 'text-show': 'text-hide'">Hello, Friend! </h4>
+            <p  [ngClass]="!display_text? 'text-show': 'text-hide'">You have already an account,
                 Sign In and start chat with your friends
             </p>
             <div>

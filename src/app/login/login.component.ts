@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   display = true;
   matcher: ErrorStateMatcher = new ErrorStateMatcher()
+  display_text = true;
 
 
   constructor(
@@ -66,25 +67,28 @@ export class LoginComponent implements OnInit {
 
   }
   signup(col2: HTMLDivElement, col1: HTMLElement): void {
-    col2.classList.replace('column-2', 'column-1');
-    col1.classList.replace('column-1', 'column-2');
-
-    (col2.querySelector('.singUp')! as HTMLDivElement).style.display = 'none';
-    (col2.querySelector('.singIn')! as HTMLElement).style.display = 'flex';
+    col2.style.right = '50%';
+    col1.style.left = '50%';
     col2.style.borderRadius = '0 25px 25px 0';
-
-    this.display = false;
-
-
+    const text = col2.querySelector('#p1');
+    const letters = text!.textContent!.split('');
+    console.log(letters);
+  
+    this.display_text = false;
+     setTimeout(() => {
+      this.display = false;
+     }, 1000);
+  
   }
   signin(col2: HTMLElement, col1: HTMLElement): void {
-    col2.classList.replace('column-1', 'column-2');
-    col1.classList.replace('column-2', 'column-1');
+    col2.style.right = '0';
+    col1.style.left = '0';
     col2.style.borderRadius = '';
-    (col2.querySelector('.singUp')! as HTMLElement).style.display = 'flex';
-    (col2.querySelector('.singIn')! as HTMLElement).style.display = 'none';
-
-    this.display = true
+  
+    this.display_text = true;
+    setTimeout(() => {
+      this.display = true;
+     }, 1000);
 
 
   }
@@ -131,3 +135,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 
 }
+function slowAlert(slowAlert: any, arg1: number) {
+  throw new Error('Function not implemented.');
+}
+
