@@ -20,6 +20,10 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon('duo', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/duo_black_24dp.svg"));
     this.matIconRegistry.addSvgIcon('whatsapp', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/whatsapp_black_24dp.svg"));
 
+    this.matIconRegistry.addSvgIcon('attachment', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/attachment_black_24dp.svg"));
+    this.matIconRegistry.addSvgIcon('graphic_eq', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/graphic_eq_black_24dp.svg"));
+    this.matIconRegistry.addSvgIcon('emoji', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/emoji_emotions_black_24dp.svg"));
+
   }
 
   ngOnInit() {
