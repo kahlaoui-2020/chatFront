@@ -6,33 +6,30 @@
     </mat-toolbar>
     <mat-divider></mat-divider>
     <div #scroll id="scroll-div-1"
-    style="
-        background-color: aquamarine; 
-        flex-grow: 1; width:80%;  height:100%;
-        margin: 15px auto; overflow-y: scroll; scroll-behavior: smooth;"
+    class="message-container"
         infinite-scroll
         [infiniteScrollDistance]="1"
         [infiniteScrollUpDistance]="1"
         [infiniteScrollThrottle]="1"
         (scrolledUp)="onScroll()"
         [scrollWindow]="false">
-        <div *ngFor="let message of room?.messages">
+        <div *ngFor="let message of room?.messages" style="margin: 10px;">
             <div [ngClass]="message.sender === me.id? 'sender': 'recivier'">
-                <p>{{message.content}}</p>
-                <p>{{message.creationDate}}</p>
+                <div class="message">
+                    <span>{{message.content}} {{message.creationDate | date: 'yyyy-MM-dd'}}</span>
+                </div>
             </div>
-
-            <mat-divider></mat-divider>
         </div>
     </div>
-    <div style="width:80%; margin: auto; text-align:center; display: flex; justify-content: space-between;">
-            <input matInput style="    width: 100%;
-            border-radius: 15px;
-            border: 1px solid gray;
-            margin: 15px 0;
-            height: 30px;" [formControl]="msg" type="text">
-        <button mat-button (click)="send()">
-            <mat-icon>send</mat-icon>
+
+
+    <div mat-line class="send-footer">
+        <div class="message-input">
+            <input  [formControl]="msg" type="text">
+            <div style="background-color: white;"></div>
+        </div>
+        <button mat-icon-button (click)="send()" style="margin: auto;">
+            <mat-icon svgIcon="send"></mat-icon>
         </button>
     </div>
 </div>
