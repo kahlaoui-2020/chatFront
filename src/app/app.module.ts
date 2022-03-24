@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,8 @@ import {TabViewModule} from 'primeng/tabview';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { VideoRoomComponent } from './shared/video-room/video-room.component';
+import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
+import { ErrorHandlerService } from './error-handler-service';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { VideoRoomComponent } from './shared/video-room/video-room.component';
     LoginComponent,
     RoomComponent,
     HomeComponent,
-    VideoRoomComponent
+    VideoRoomComponent,
+    ErrorModalComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,9 @@ import { VideoRoomComponent } from './shared/video-room/video-room.component';
 
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpHeaderInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: HttpHeaderInterceptor, multi: true},
+    ErrorHandlerService,
+    {provide: ErrorHandler, useClass: ErrorHandlerService}
   ],
   bootstrap: [AppComponent]
 })

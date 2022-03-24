@@ -1,8 +1,8 @@
 <div class="container">
-    <mat-toolbar>
-        <p><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
-        <button mat-button (click)="connect()"><mat-icon>connect</mat-icon></button>
-        <button mat-button (click)="call()"><mat-icon>phone</mat-icon></button>
+    <mat-toolbar >
+        <p style="margin: 0px;"><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
+        <button mat-icon-button (click)="connect()"><mat-icon svgIcon="whatsapp"></mat-icon></button>
+        <button mat-icon-button (click)="call()"><mat-icon svgIcon="duo"></mat-icon></button>
     </mat-toolbar>
     <mat-divider></mat-divider>
     <div #scroll id="scroll-div-1"
@@ -21,6 +21,7 @@
             </div>
         </div>
     </div>
+
 
 
     <div mat-line class="send-footer">
