@@ -27,9 +27,13 @@
     <div mat-line class="send-footer">
         <div class="message-input">
             <input  [formControl]="msg" type="text">
-            <div style="background-color: white;"></div>
+            <div style="background-color: white;">
+                <button mat-icon-button (click)="attach_file()"><mat-icon svgIcon="attachment"></mat-icon></button>
+                <button mat-icon-button (click)="attach_audio()"><mat-icon svgIcon="graphic_eq"></mat-icon></button>
+                <button mat-icon-button (click)="attach_emoji()"><mat-icon svgIcon="emoji"></mat-icon></button>
+            </div>
         </div>
-        <button mat-icon-button (click)="send()" style="margin: auto;">
+        <button class="send" mat-icon-button (click)="send()" style="margin: auto;">
             <mat-icon svgIcon="send"></mat-icon>
         </button>
     </div>

@@ -116,4 +116,14 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
       }
     });
   }
+
+attach_file(): void {
+
+}
+attach_audio(): void {
+  
+}
+attach_emoji(): void {
+  
+}
 }
