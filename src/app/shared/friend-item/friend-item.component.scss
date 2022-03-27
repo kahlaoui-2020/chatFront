@@ -1,0 +1,30 @@
+.mat-line {
+    display: flex !important;
+    gap: 15px;
+    button {
+        grid-area: 1 / 1 / 1 /2;
+    }
+   
+   
+}
+span {
+    text-align: center;
+}
+
+.icon {
+    width: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    img {
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        }
+}
+img {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    }

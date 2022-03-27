@@ -10,7 +10,6 @@ import { ChatDbService } from 'src/app/services/chat.db.service';
   providedIn: 'root'
 })
 export class HomeService {
-
   friends: EventEmitter<UserRoom[]> = new EventEmitter();
   rooms: UserRoom[] = [];
   listRooms: BehaviorSubject<UserRoom[]> = new BehaviorSubject<UserRoom[]>(this.rooms);
@@ -27,6 +26,7 @@ export class HomeService {
         rObj.firstName = room.firstName;
         rObj.lastName = room.lastName;
         rObj.messages = [];
+        rObj.active = false
 
         rObj.pagination = {
           msgCount: room.msgCount!,
@@ -62,5 +62,9 @@ export class HomeService {
 
   getRoom(id: string): UserRoom {
     return this.rooms.find((room: UserRoom) => room.roomId === id)!
+  }
+
+  activateUser(id: string, active: boolean) {
+   (this.rooms.find((room: UserRoom) => room.id === id))!.active = active;
   }
 }
