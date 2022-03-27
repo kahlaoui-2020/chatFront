@@ -17,8 +17,6 @@ export class ChatService {
     },
     autoConnect: false
   })
-
-  messages = new EventEmitter<string>();
   users: any[] = []
 
   constructor(private auth: AuthService, private homeService: HomeService) { }
@@ -26,40 +24,39 @@ export class ChatService {
   public async startConnection(): Promise<void> {
       this.socket.auth = { 
         username: JSON.parse(localStorage.getItem('user')!).firstName,
-        socketID: null
       };
       this.socket.connect();
 
       
   }
-  public sendMessage(sender: string, to: string, roomId: string,message: string) {
-    this.socket.emit('message', {
+  public sendMessage(sender: string, to: string, roomId: string,message: string): Promise<void> {
+    const event = this.socket.emit('message', {
       message,
       sender,
       to,
       roomId,
-    });
-    this.homeService.addMessage(roomId, {content: message, sender: sender});
+    })
+    return Promise.resolve()
   }
   public getMessage(idRoom: string, idFriend: string) {
     this.socket.off('message').on('message', (message: string, sender: string, roomId: any) => {
-      console.log(roomId)
       this.homeService.addMessage(roomId, { content:message, sender });
     });
   }
   public getUsers() {
     this.socket.on('user-connected', (data: any) => {
-      this.users.push(data);
+     this.homeService.activateUser(data.frienId, true)
     });
   }
   public onConnect(): void {
     this.socket.on('connect', () => {
+
       console.log(`New Connection ${++this.count}`)
     })
   }
   public onDisconnect(): void {
     this.socket.on('user disconnected', (data: any) => {
-      console.log(`%s %c disconnected`, 'color: red', data)
+      this.homeService.activateUser(data.frienId, false)
     })
   }
 

@@ -70,9 +70,6 @@ export class LoginComponent implements OnInit {
     col2.style.right = '50%';
     col1.style.left = '50%';
     col2.style.borderRadius = '0 25px 25px 0';
-    const text = col2.querySelector('#p1');
-    const letters = text!.textContent!.split('');
-    console.log(letters);
   
     this.display_text = false;
      setTimeout(() => {
