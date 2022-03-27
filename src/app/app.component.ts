@@ -24,6 +24,9 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon('graphic_eq', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/graphic_eq_black_24dp.svg"));
     this.matIconRegistry.addSvgIcon('emoji', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/emoji_emotions_black_24dp.svg"));
 
+    this.matIconRegistry.addSvgIcon('logout', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/logout_black_24dp.svg"));
+    this.matIconRegistry.addSvgIcon('more_vert', this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/more_vert_black_24dp.svg"));
+
   }
 
   ngOnInit() {
