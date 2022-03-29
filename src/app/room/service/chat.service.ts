@@ -45,7 +45,7 @@ export class ChatService {
   }
   public getUsers() {
     this.socket.on('user-connected', (data: any) => {
-     this.homeService.activateUser(data.frienId, true)
+    // this.homeService.activateUser(data.frienId, true)
     });
   }
   public onConnect(): void {
@@ -56,7 +56,7 @@ export class ChatService {
   }
   public onDisconnect(): void {
     this.socket.on('user disconnected', (data: any) => {
-      this.homeService.activateUser(data.frienId, false)
+      //this.homeService.activateUser(data.frienId, false)
     })
   }
 
