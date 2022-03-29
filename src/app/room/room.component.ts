@@ -79,10 +79,7 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
     if(this.msg.valid)
       this.chatService
         .sendMessage(this.me.id!, this.friend.id!, this.friend.roomId!, this.msg.value)
-        .then(() => {
-          this.homeService.addMessage(this.friend.roomId!, {content: this.msg.value, sender: this.me.id, creationDate: new Date()});
-
-        })
+       
       else console.log('msg is not valid')
   }
 
