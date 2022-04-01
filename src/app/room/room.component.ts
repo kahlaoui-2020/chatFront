@@ -132,6 +132,6 @@ attach_emoji(): void {
 }
 
 id() {
-  console.log(this.chatService.socket.id)
+  console.log(this.peerService.peer.id)
 }
 }

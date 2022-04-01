@@ -16,7 +16,6 @@ export class FriendItemComponent implements OnInit, AfterViewChecked{
   constructor() { 
   }
   ngAfterViewChecked(): void {
-    console.log(this.friend, i), i++;
   
   }
 
