@@ -12,4 +12,5 @@ export interface UserRoom {
         limit: number;
         skip: number;
     }
+    active?: boolean;
 }

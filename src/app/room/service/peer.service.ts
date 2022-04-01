@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import Peer, { MediaConnection } from 'peerjs';
-import { VideoRoomComponent } from 'src/app/shared/video-room/video-room.component';
-import { v4 as uuidv4 } from 'uuid';
+declare var Peer: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class PeerService {
 
-  public peer!: Peer;
+  public peer!: any;
   private call: any;
-  private mediaCall!: Peer.MediaConnection;
+  private mediaCall!: any;
 
   mediaStreaming!: MediaStream;
   constructor(private dialog: MatDialog) { }
@@ -31,10 +29,10 @@ export class PeerService {
 
         //  localStorage.setItem("label", this.peer);
 
-        this.peer.on('open', (id) => {
+        this.peer.on('open', (id: string) => {
           console.log('My peer ID is: ' + id)
         })
-        this.peer.on('connection', (conn) => {
+        this.peer.on('connection', (conn: any) => {
           console.log('conn: ', conn)
         })
         return id;
@@ -44,8 +42,8 @@ export class PeerService {
     }
   }
   async onListening() {
-    this.peer.on('connection', (conn) => {
-      conn.on('data', (data) => {
+    this.peer.on('connection', (conn: { on: (arg0: string, arg1: (data: any) => void) => void; peer: any; }) => {
+      conn.on('data', (data: any) => {
         console.log('data: ', data, conn.peer)
       })
       // console.log('conn: ', conn)
@@ -88,12 +86,12 @@ export class PeerService {
       
     });
 
-    call.on("error", (err) => {
+    call.on("error", (err: any) => {
       console.log('error streaming', err);
     })
   }
 
-  async establishMediaAnswer(call: MediaConnection, localVideo: HTMLVideoElement, remoteVideo: HTMLVideoElement) {
+  async establishMediaAnswer(call: any, localVideo: HTMLVideoElement, remoteVideo: HTMLVideoElement) {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
 
 

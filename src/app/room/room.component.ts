@@ -1,5 +1,5 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Message } from 'primeng/api';
 import { HomeService } from '../home/service/home.service';
@@ -19,7 +19,7 @@ import { PeerService } from './service/peer.service';
 export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterViewChecked {
 
   friend!: UserRoom;
-  msg = new FormControl('')
+  msg = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z1-9]*')])
   list: string[] = [];
   messages!: Message[];
   rooms: UserRoom[] = [];
@@ -34,8 +34,7 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
     private peerService: PeerService,
     private dialog: MatDialog) {
     this.me = JSON.parse(localStorage.getItem('user')!);
-    this.peerService.initPeer(this.me.id!)
-    // console.log(this.me);
+    //this.peerService.initPeer(this.me.id!)
     
   }
   ngAfterViewChecked(): void {
@@ -45,7 +44,6 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
   ngOnChanges(changes: SimpleChanges): void {
     if (this.friend) {
       this.chatService.getMessage(this.friend.roomId!, this.friend.id!);
-      console.log('log')
     }
   }
 
@@ -54,29 +52,35 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
   }
 
   ngOnInit(): void {
-    this.peerService.onListening()
-    this.peerService.peer.on("call", (call) => {
-      if(confirm(`Accept call from ${call.peer}`)) {
-        const dialogRef = this.dialog.open(VideoRoomComponent, {
-          data:{
-            call: call,
-            answer: true,
-            }
-          });
-        dialogRef.afterClosed().subscribe(() => {
-          console.log('dialog closed')
-        })
-      }
-    })
+    //this.peerService.onListening()
+    // this.peerService.peer.on("call", (call) => {
+    //   if(confirm(`Accept call from ${call.peer}`)) {
+    //     const dialogRef = this.dialog.open(VideoRoomComponent, {
+    //       width: '100%',
+    //       height: '100%',
+    //       data:{
+    //         call: call,
+    //         answer: true,
+    //         }
+    //       });
+    //     dialogRef.afterClosed().subscribe(() => {
+    //       console.log('dialog closed')
+    //     })
+    //   }
+    // })
     this.homeService.friend.subscribe(value => {
       this.friend = value;
       this.room = this.homeService.getRoom(this.friend.roomId!)
       this.chatService.getMessage(this.friend.roomId!, this.friend.id!);
     });
-    this.peerService.establishConnection(this.friend.id!)
+    // this.peerService.establishConnection(this.friend.id!)
   }
   send() {
-    this.chatService.sendMessage(this.me.id!, this.friend.id!, this.friend.roomId!, this.msg.value)
+    if(this.msg.valid)
+      this.chatService
+        .sendMessage(this.me.id!, this.friend.id!, this.friend.roomId!, this.msg.value)
+       
+      else console.log('msg is not valid')
   }
 
   connect() {
@@ -116,4 +120,18 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
       }
     });
   }
+
+attach_file(): void {
+
+}
+attach_audio(): void {
+  
+}
+attach_emoji(): void {
+  
+}
+
+id() {
+  console.log(this.peerService.peer.id)
+}
 }

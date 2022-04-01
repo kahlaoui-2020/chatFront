@@ -24,6 +24,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { VideoRoomComponent } from './shared/video-room/video-room.component';
 import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
 import { ErrorHandlerService } from './error-handler-service';
+import { FriendItemComponent } from './shared/friend-item/friend-item.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ErrorHandlerService } from './error-handler-service';
     RoomComponent,
     HomeComponent,
     VideoRoomComponent,
-    ErrorModalComponent
+    ErrorModalComponent,
+    FriendItemComponent
   ],
   imports: [
     BrowserModule,
@@ -58,4 +60,3 @@ import { ErrorHandlerService } from './error-handler-service';
   bootstrap: [AppComponent]
 })
 export class AppModule {}
-platformBrowserDynamic().bootstrapModule(AppModule);
