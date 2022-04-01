@@ -60,4 +60,3 @@ import { FriendItemComponent } from './shared/friend-item/friend-item.component'
   bootstrap: [AppComponent]
 })
 export class AppModule {}
-platformBrowserDynamic().bootstrapModule(AppModule);
