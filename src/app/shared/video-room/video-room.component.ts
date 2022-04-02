@@ -24,12 +24,18 @@ export class VideoRoomComponent implements OnInit, AfterViewInit {
         this.answer = this.data.answer;
         this.call = this.data.call;
       }
+
+      console.log('id: '+ this.id + ' answer: ' + this.answer + ' call: ' + this.call);
+      console.log(this.call)
+      console.log(typeof this.answer)
     }
   ngAfterViewInit(): void {
 
     if(this.answer) {
+      console.log("%c New  call has been recieved", 'color: blue')
       this.peerService.establishMediaAnswer(this.call, this.localVideo.nativeElement, this.remoteVideo.nativeElement)
     }else {
+      console.log("%c Start new call", 'color: red')
       this.peerService.establishMediaCall(this.id, this.localVideo.nativeElement, this.remoteVideo.nativeElement)
     }
   }

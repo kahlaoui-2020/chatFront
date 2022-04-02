@@ -1,6 +1,7 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import Peer from 'peerjs';
 import { Message } from 'primeng/api';
 import { HomeService } from '../home/service/home.service';
 import { UserRoom } from '../models/user-room.model';
@@ -52,28 +53,27 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
   }
 
   ngOnInit(): void {
-    //this.peerService.onListening()
-    // this.peerService.peer.on("call", (call) => {
-    //   if(confirm(`Accept call from ${call.peer}`)) {
-    //     const dialogRef = this.dialog.open(VideoRoomComponent, {
-    //       width: '100%',
-    //       height: '100%',
-    //       data:{
-    //         call: call,
-    //         answer: true,
-    //         }
-    //       });
-    //     dialogRef.afterClosed().subscribe(() => {
-    //       console.log('dialog closed')
-    //     })
-    //   }
-    // })
+    const call = this.peerService.peer.on("call", (call: any) => {
+      if(confirm(`Accept call from ${call.peer}`)) {
+        const dialogRef = this.dialog.open(VideoRoomComponent, {
+         
+          data:{
+            call: call,
+            answer: true,
+            }
+          });
+        dialogRef.afterClosed().subscribe(() => {
+          console.log('dialog closed')
+        })
+      }
+    })
+    call.on('close', () => {console.log('Media streaming was closed, mediaConnection')})
     this.homeService.friend.subscribe(value => {
       this.friend = value;
       this.room = this.homeService.getRoom(this.friend.roomId!)
       this.chatService.getMessage(this.friend.roomId!, this.friend.id!);
     });
-    // this.peerService.establishConnection(this.friend.id!)
+    this.peerService.establishConnection(this.friend.id!)
   }
   send() {
     if(this.msg.valid)
@@ -132,6 +132,7 @@ attach_emoji(): void {
 }
 
 id() {
-  console.log(this.peerService.peer.id)
+
+  this.peerService.establishConnection(this.friend.id!)
 }
 }

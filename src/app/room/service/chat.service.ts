@@ -51,7 +51,6 @@ export class ChatService {
   public onConnect(): void {
     this.socket.on('connect', () => {
 
-      console.log(`New Connection ${++this.count}`)
     })
   }
   public onDisconnect(): void {

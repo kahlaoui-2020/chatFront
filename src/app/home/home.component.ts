@@ -28,8 +28,7 @@ export class HomeComponent implements OnInit, OnChanges, AfterViewInit, OnDestro
     private chatService: ChatService,
     private peerService: PeerService,
     private router: Router) {
-   this.chatService.startConnection();
-console.log('log')
+    this.chatService.startConnection();
 
     this.me = JSON.parse(localStorage.getItem('user')!);
 
@@ -57,7 +56,7 @@ console.log('log')
   ngOnInit(): void {
 
     let i = 0;
-   this.peerService.initPeer(this.me.id!)
+    this.peerService.initPeer(this.me.id!)
     this.chatService.getUsers();
     this.chatService.onDisconnect();
     this.chatService.onConnect();
@@ -65,9 +64,9 @@ console.log('log')
 
     this.homeService.friend.subscribe(value => {this.friend = value })
     this.homeService.friends.subscribe(value => {
-      console.log(i); i++;
       if (this.friends.length == 0) this.friends = value;
     });
+
 
 
     
