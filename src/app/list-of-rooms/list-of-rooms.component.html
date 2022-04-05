@@ -1,0 +1,6 @@
+<mat-selection-list [multiple]="false" #list>
+    <mat-list-option *ngFor="let room of myrooms" (selectionChange)="openRoom(list.selectedOptions.selected[0].value)">
+        <app-friend-item [friend]="room" ></app-friend-item>
+    </mat-list-option>
+
+</mat-selection-list>
