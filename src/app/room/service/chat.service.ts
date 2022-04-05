@@ -1,5 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 import { HomeService } from 'src/app/home/service/home.service';
 import { AuthService } from 'src/app/login/service/auth.service';

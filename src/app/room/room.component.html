@@ -1,6 +1,6 @@
 <div class="container">
     <mat-toolbar >
-        <p style="margin: 0px;"><i>{{friend?.firstName}}</i> <i> {{friend?.lastName}}</i></p>
+        <p style="margin: 0px;"><i>{{currentRoom?.firstName}}</i> <i> {{currentRoom?.lastName}}</i></p>
         <button mat-icon-button (click)="connect()"><mat-icon svgIcon="whatsapp"></mat-icon></button>
         <button mat-icon-button (click)="call()"><mat-icon svgIcon="duo"></mat-icon></button>
         <button mat-icon-button (click)="id()">id</button>
@@ -14,7 +14,7 @@
         [infiniteScrollThrottle]="1"
         (scrolledUp)="onScroll()"
         [scrollWindow]="false">
-        <div *ngFor="let message of room?.messages" style="margin: 10px;">
+        <div *ngFor="let message of messages" style="margin: 10px;">
             <div [ngClass]="message.sender === me.id? 'sender': 'recivier'">
                 <div class="message">
                     <span class="message" matTooltip="{{message.creationDate | date: 'yyyy-MM-dd'}}">{{message.content}}</span>

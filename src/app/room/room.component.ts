@@ -1,9 +1,8 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import Peer from 'peerjs';
-import { Message } from 'primeng/api';
+import { MatDialog } from '@angular/material/dialog';
 import { HomeService } from '../home/service/home.service';
+import { Message } from '../models/message.model';
 import { UserRoom } from '../models/user-room.model';
 import { User } from '../models/user.model';
 import { VideoRoomComponent } from '../shared/video-room/video-room.component';
@@ -20,13 +19,15 @@ import { PeerService } from './service/peer.service';
 export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterViewChecked {
 
   friend!: UserRoom;
-  msg = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z1-9]*')])
+  msg = new FormControl('', [Validators.required])
   list: string[] = [];
-  messages!: Message[];
+  messages: Message[] = [];
   rooms: UserRoom[] = [];
   room: UserRoom = {};
   user: User = {};
   me: User;
+
+  currentRoom: User = {};
 
   constructor(
     private chatService: ChatService, 
@@ -43,8 +44,12 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
 
   }
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
     if (this.friend) {
       this.chatService.getMessage(this.friend.roomId!, this.friend.id!);
+    }
+    if(this.currentRoom) {
+      this.messages = [];
     }
   }
 
@@ -73,13 +78,27 @@ export class RoomComponent implements OnInit, AfterViewInit, OnChanges, AfterVie
       this.room = this.homeService.getRoom(this.friend.roomId!)
       this.chatService.getMessage(this.friend.roomId!, this.friend.id!);
     });
-    this.peerService.establishConnection(this.friend.id!)
+    this.peerService.establishConnection(this.friend.id!);
+    this.homeService.currentroomSubject.subscribe(value => {
+    this.messages = []
+      this.currentRoom = value;
+      this.messageService.getMessages(this.currentRoom.roomId, 100, 0).subscribe(
+        messages => {
+         this.messages.push(...messages);
+         console.log(messages)
+
+      })
+      
+    })
+  
   }
   send() {
     if(this.msg.valid)
-      this.chatService
-        .sendMessage(this.me.id!, this.friend.id!, this.friend.roomId!, this.msg.value)
-       
+      {
+        this.chatService
+          .sendMessage(this.me.id!, this.currentRoom.id!, this.currentRoom.roomId!, this.msg.value)
+        this.messages.push({ content:this.msg.value, sender: this.me.id });
+      }
       else console.log('msg is not valid')
   }
 

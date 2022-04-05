@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Message } from 'src/app/models/message.model';
 import { UserRoom } from 'src/app/models/user-room.model';
+import { User } from 'src/app/models/user.model';
 import { MessageService } from 'src/app/room/service/message.service';
 import { ChatDbService } from 'src/app/services/chat.db.service';
 
@@ -12,14 +13,24 @@ import { ChatDbService } from 'src/app/services/chat.db.service';
 export class HomeService {
   friends: EventEmitter<UserRoom[]> = new EventEmitter();
   rooms: UserRoom[] = [];
+  /*
+  new implementation
+  */
+  myrooms: User[] = [];
+  myroomsSubject: Subject<UserRoom[]> = new Subject<UserRoom[]>();
+  currentroom: UserRoom = {};
+  currentroomSubject: Subject<User> = new Subject<User>();
+
+  /*******************************/
+
   listRooms: BehaviorSubject<UserRoom[]> = new BehaviorSubject<UserRoom[]>(this.rooms);
   friend: BehaviorSubject<UserRoom> = new BehaviorSubject<UserRoom>({});
   constructor(private http: HttpClient, private dbService: ChatDbService, private messageService: MessageService) {}
 
   getFriends(): void{
     this.http.get<UserRoom[]>('http://localhost:3000/rooms')
-    .subscribe(value => {
-      this.rooms  = value.map((room, index) => {
+    .subscribe((value: any[]) => {
+      this.rooms  = value.map((room: { roomId: string | undefined; id: string | undefined; firstName: string | undefined; lastName: string | undefined; msgCount: number; }, index: any) => {
         var rObj: UserRoom = {};
         rObj.roomId = room.roomId;
         rObj.id = room.id;
@@ -51,6 +62,25 @@ export class HomeService {
     })
   }
 
+  /** */
+  getMyRooms(): void {
+    this.http.get<User[]>('http://localhost:3000/rooms')
+    .subscribe( {
+      next:  (value: User[]) => { 
+        this.myrooms = value;
+        this.myroomsSubject.next(this.myrooms);
+        this.emitCurrentRoom(value[0]);
+      },
+      error: (err: any) => {
+        throw err
+      }
+    })
+  }
+
+  emitCurrentRoom(room: User): void {
+    this.currentroomSubject.next(room)  
+  }
+  /******** */
   addMessage(id: string, message: Message) {
     console.log('all rooms: ', this.rooms);
     const room = this.rooms.find((room: UserRoom )=> room.roomId === id);

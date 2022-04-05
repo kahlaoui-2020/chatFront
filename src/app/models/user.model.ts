@@ -7,4 +7,5 @@ export interface User {
     password?: string;
     registrationDate?: Date;
     picture?: string;
+    roomId?: string;
 }

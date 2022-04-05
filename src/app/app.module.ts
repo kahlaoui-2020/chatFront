@@ -25,6 +25,7 @@ import { VideoRoomComponent } from './shared/video-room/video-room.component';
 import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
 import { ErrorHandlerService } from './error-handler-service';
 import { FriendItemComponent } from './shared/friend-item/friend-item.component';
+import { ListOfRoomsComponent } from './list-of-rooms/list-of-rooms.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FriendItemComponent } from './shared/friend-item/friend-item.component'
     HomeComponent,
     VideoRoomComponent,
     ErrorModalComponent,
-    FriendItemComponent
+    FriendItemComponent,
+    ListOfRoomsComponent
   ],
   imports: [
     BrowserModule,

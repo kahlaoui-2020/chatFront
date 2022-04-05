@@ -10,16 +10,20 @@ import { User } from '../models/user.model';
 export class ListOfRoomsComponent implements OnInit {
 
   myrooms: User[] = [];
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService) { 
+    console.log('ListOfRoomsComponent');
+  }
 
   ngOnInit(): void {
-    this.homeService.myroomsSubject.subscribe(rooms => this.myrooms = rooms);
+    this.homeService.myroomsSubject.subscribe(rooms => {
+      this.myrooms = rooms;
+      console.log(rooms);
+    });
   }
 
 
 
   openRoom(value: any): void {
-    console.log(value);
     this.homeService.emitCurrentRoom(value);
 
   }

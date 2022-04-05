@@ -40,10 +40,8 @@ export class HomeComponent implements OnInit, OnChanges, AfterViewInit, OnDestro
     throw new Error('Method not implemented.');
   }
   ngAfterViewInit(): void {
-  //  console.log(this.chatService.socket.auth, "Start new Connection!", this.chatService.socket.active, this.chatService.socket.id );
   }
   ngOnChanges(changes: SimpleChanges): void {
-    //console.log('ng: ', this.peerService.peer)
   }
 
   logout(): void {
@@ -60,7 +58,7 @@ export class HomeComponent implements OnInit, OnChanges, AfterViewInit, OnDestro
     this.chatService.getUsers();
     this.chatService.onDisconnect();
     this.chatService.onConnect();
-    if (this.friends.length == 0) this.homeService.getFriends();
+    this.homeService.getMyRooms();
 
     this.homeService.friend.subscribe(value => {this.friend = value })
     this.homeService.friends.subscribe(value => {
