@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Install and build
-        working-directory: chatFront
+        working-directory: ./
         run: npm install && npm run gh-build && cp dist/chatFront/index.html dist/chatFront/404.html
       
       - name: Deploy
