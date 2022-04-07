@@ -1,0 +1,117 @@
+mat-toolbar {
+    background-color: rgba(75, 162, 210, 1);
+}
+.container {
+    background-color: whitesmoke;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sender {
+    display: flex;
+    justify-content:  flex-end;
+    div.message {
+        background-color: white;
+
+    }
+}
+
+
+.recivier {
+    display: flex;
+    justify-content:  flex-start;
+    div.message {
+        background-color: rgba(22 , 97, 165, 1);
+
+    }
+}
+div.message {
+    width: fit-content;   
+    border-radius: 25px;
+    padding: 5px;
+    line-height: 30px;
+    text-align: center;
+    height: 30px;
+    span {
+        cursor: default;
+        font-size: 16px;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+    }
+  }
+.message-container {
+    flex-grow: 1; width:80%;  
+    height:100%;
+    margin: 15px auto; 
+    overflow-y: scroll; 
+    scroll-behavior: smooth;
+}
+.send-footer {
+    width:80%; 
+    margin: auto; 
+    text-align:center;
+    display: flex; 
+    justify-content: space-between;
+    gap: 10px;
+
+    button {
+        background-color: white;
+        width: 50px;
+        height: 50px;
+    }
+    button.send {
+        box-shadow: 
+        5px 1px 15px 0px rgba(0, 0, 0, 0.2), 
+        5px 1px 15px 0px rgba(0, 0, 0, 0.14), 
+        0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
+    }
+}
+
+.mat-form-field-outline-start {
+border-radius: 25px 0 0 25px !important;
+min-width: 25px !important;
+}
+.mat-form-field-outline-end {
+    border-radius: 0 25px 25px 0 !important;
+}
+
+.mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0.4em !important; }  
+.mat-form-field-appearance-outline .mat-form-field-label {margin-top: -10px} 
+
+
+.message-input {
+    display: flex;
+    width: 100%;
+    border-radius: 25px;
+    border: 1px solid white;
+    margin: 15px 0;
+    height: 50px;
+    box-shadow: 
+        5px 1px 15px 0px rgba(0, 0, 0, 0.2), 
+        5px 1px 15px 0px rgba(0, 0, 0, 0.14), 
+        0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
+    input {
+        outline: none;
+        width: 100%;
+        font-size: 16px;
+        border: 1px solid white;
+        border-radius: 25px 0 0 25px;
+        padding: 0 0 0 30px;
+        height: 49px;
+    }
+    div {
+        display: flex;
+        width: content;
+        background-color: white;
+        border-radius: 0 25px 25px 0;
+    }
+}
+.message-input:focus-within {
+    outline: rgba(0 , 0, 255, 0.7) solid 2px;
+    
+}
+button.send:hover {
+    outline: rgba(0 , 0, 255, 0.7) solid 2px;
+}
